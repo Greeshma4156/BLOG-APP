@@ -53,6 +53,31 @@ authorRoute.post('/articles',verifyToken("AUTHOR"),checkAuthor,async(req,res)=>{
 })
 
 
+//Get article with full comments for author
+authorRoute.get('/articles/:articleId/comments', verifyToken("AUTHOR"), async (req, res) => {
+  const { articleId } = req.params;
+  const userId = req.user.userId;
+  
+  const article = await ArticleModel.findOne({ 
+    _id: articleId, 
+    author: userId 
+  })
+    .populate('author', 'firstName email')
+    .populate('comments.user', 'email firstName');
+    
+  if (!article) {
+    return res.status(404).json({ message: "Article not found or access denied" });
+  }
+  
+  res.status(200).json({ 
+    message: "Article comments", 
+    payload: { 
+      ...article.toObject(), 
+      comments: article.comments || [] 
+    } 
+  });
+});
+
 //Read articles of author
 authorRoute.get('/articles/:authorId',verifyToken("AUTHOR"),checkAuthor,async(req,res)=>{
     //get author id

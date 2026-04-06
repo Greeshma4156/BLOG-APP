@@ -69,17 +69,33 @@ userRoute.get('/articles/:articleId',async(req,res)=>{
 
 //Add comment to an article
 
-userRoute.post('/articles/:articleId',verifyToken("USER"),async(req,res)=>{
+userRoute.post('/articles/:articleId/comments',verifyToken("USER"),async(req,res)=>{
     const { articleId } = req.params
-    let {comment}=req.body
-    let articleOfDB=await ArticleModel.findOne({_id:articleId})
-    if(!articleOfDB){
-        return res.status(404).json({message:"Article not found"})
+    const { user: userId, comment } = req.body
+    
+    if (!userId || !comment) {
+      return res.status(400).json({ message: "User ID and comment required" });
     }
-    //update the article
-    let updatedArticle=await ArticleModel.findByIdAndUpdate(articleId,
-        {$push:{ comments:{user, comment }}},
-        { new:true}).populate("");
-        //send res(updated article)
-     res.status(200).json({message:"Article updated",payload:updatedArticle})
+
+    let article = await ArticleModel.findById(articleId);
+    if (!article) {
+      return res.status(404).json({ message: "Article not found" });
+    }
+
+    article.comments.push({ 
+      user: userId, 
+      comment: comment.trim()
+    });
+    
+    await article.save();
+    
+    await article.populate("comments.user", "email firstName");
+    
+    res.status(201).json({ 
+      message: "Comment added successfully", 
+      payload: { 
+        ...article.toObject(),
+        comments: article.comments 
+      } 
+    });
 })

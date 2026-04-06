@@ -1,9 +1,115 @@
 import React from 'react'
 
+import  { useEffect, useState } from 'react';
+import axios from 'axios';
+import { Link } from 'react-router';
+import { useAuth } from '../store/authStore';
+import {
+  pageWrapper, 
+  articleGrid, 
+  articleCardClass, 
+  articleTitle, 
+  articleExcerpt, 
+  articleMeta, 
+  timestampClass, 
+  tagClass,
+  loadingClass,
+  emptyStateClass
+} from '../styles/common';
+
 function AdminDashboard() {
+  const [articles, setArticles] = useState([]);
+  const [stats, setStats] = useState({ total: 0, active: 0, pending: 0 });
+  const [loading, setLoading] = useState(true);
+  const currentUser = useAuth(state => state.currentUser);
+
+  const fetchData = async () => {
+    try {
+      const [articlesRes, statsRes] = await Promise.all([
+        axios.get('http://localhost:4000/admin-api/articles', { withCredentials: true }),
+        axios.get('http://localhost:4000/admin-api/stats', { withCredentials: true })
+      ]);
+      setArticles(articlesRes.data.payload || []);
+      setStats(statsRes.data.payload || {});
+    } catch (err) {
+      console.error('Admin data fetch error:', err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  if (loading) return <div className={loadingClass}>Loading admin dashboard...</div>;
+
   return (
-    <div>AdminDashboard</div>
-  )
+    <div className={pageWrapper}>
+      {/* Welcome Header */}
+      <div className="flex flex-col lg:flex-row items-center gap-6 mb-12 bg-white/60 backdrop-blur-md p-8 rounded-3xl border border-white/50 shadow-xl shadow-purple-500/10">
+        <div className="w-20 h-20 bg-gradient-to-br from-purple-400 to-indigo-500 rounded-2xl flex items-center justify-center shrink-0">
+          <span className="text-2xl">⚙️</span>
+        </div>
+        <div className="text-center lg:text-left">
+          <h1 className="text-4xl lg:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-indigo-500">
+            Admin Control Panel
+          </h1>
+          <p className="text-gray-500 font-medium mt-1">Manage content & users</p>
+        </div>
+      </div>
+
+      {/* Stats Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+        <div className="bg-gradient-to-br from-emerald-50 to-emerald-100 p-8 rounded-3xl border border-emerald-200 shadow-xl text-center">
+          <div className="text-3xl font-black text-emerald-600 mb-2">{stats.active || 0}</div>
+          <div className="text-emerald-700 font-bold text-sm uppercase tracking-wider">Active Articles</div>
+        </div>
+        <div className="bg-gradient-to-br from-yellow-50 to-yellow-100 p-8 rounded-3xl border border-yellow-200 shadow-xl text-center">
+          <div className="text-3xl font-black text-yellow-600 mb-2">{stats.pending || 0}</div>
+          <div className="text-yellow-700 font-bold text-sm uppercase tracking-wider">Pending Review</div>
+        </div>
+        <div className="bg-gradient-to-br from-indigo-50 to-purple-100 p-8 rounded-3xl border border-indigo-200 shadow-xl text-center">
+          <div className="text-3xl font-black text-indigo-600 mb-2">{stats.total || 0}</div>
+          <div className="text-indigo-700 font-bold text-sm uppercase tracking-wider">Total Articles</div>
+        </div>
+      </div>
+
+      {/* Articles Grid */}
+      <div>
+        <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-3">
+          <span className="w-8 h-1 bg-purple-500 rounded-full"></span>
+          All Articles
+        </h2>
+        {articles.length === 0 ? (
+          <div className={emptyStateClass + ' bg-white/40 rounded-3xl border border-dashed border-gray-300'}>
+            No articles to moderate.
+          </div>
+        ) : (
+          <div className={articleGrid}>
+            {articles.map((article) => (
+              <div key={article._id} className={articleCardClass}>
+                {article.imageUrl && (
+                  <div className="w-full h-48 bg-gradient-to-br from-indigo-100 to-pink-100 rounded-2xl mb-4 overflow-hidden relative shadow-inner">
+                    <img src={article.imageUrl} alt="Cover" className="w-full h-full object-cover opacity-90 group-hover:scale-105 transition-transform duration-500" />
+                    <div className="absolute top-3 left-3">
+                      <span className={tagClass}>{article.category || 'General'}</span>
+                    </div>
+                  </div>
+                )}
+                <h3 className={articleTitle}>{article.title}</h3>
+                <p className={articleExcerpt}>{article.content?.slice(0, 100)}...</p>
+                <div className="mt-auto pt-4 border-t border-gray-100/50 flex justify-between items-center text-sm">
+                  <span className={articleMeta}>By {article.author?.firstName}</span>
+                  <Link to={`/article/${article._id}`} className={timestampClass}>View →</Link>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  );
 }
 
-export default AdminDashboard
+export default AdminDashboard;

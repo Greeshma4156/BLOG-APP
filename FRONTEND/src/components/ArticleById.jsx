@@ -93,23 +93,29 @@ function ArticleById() {
 
   const addComment = async (data) => {
     try {
+      const userId = user._id || user.id || user.userId;
       const payload = {
-        user: user.userId,
+        user: userId,
         comment: data.comment
       }
       
-      const res = await axios.post(`http://localhost:4000/user-api/articles/${id}`, payload, { withCredentials: true });
+      const res = await axios.post(`http://localhost:4000/user-api/articles/${id}/comments`, payload, { withCredentials: true });
       
       // Update article locally
       setArticle({
         ...article,
-        comments: [...article.comments, { user: { email: user.email }, comment: data.comment }]
+        comments: [...article.comments, { 
+          user: { email: user.email || 'Anonymous', firstName: user.firstName || user.name }, 
+          comment: data.comment,
+          _id: res.data.payload._id
+        }]
       });
       
       toast.success("Comment added!");
       reset();
     } catch (err) {
-      toast.error(err.response?.data?.message || "Failed to add comment");
+      console.error('Comment error:', err);
+      toast.error(err.response?.data?.message || err.response?.data?.error || "Failed to add comment");
     }
   };
 

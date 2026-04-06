@@ -44,24 +44,31 @@ function AuthorArticles() {
   };
   
   useEffect(() => {
-    if (!user || !user._id) {
-      console.log('AuthorArticles: user or user._id missing', user);
+    console.log('AuthorArticles user:', user);
+    
+    if (!user) {
+      setError('Please login to view your articles.');
+      return;
+    }
+
+    // Try user._id first, fallback to user.id or user.userId
+    const userId = user._id || user.id || user.userId;
+    if (!userId) {
+      console.log('No user ID found. User object:', user);
       setError('User ID not found. Please login again.');
       return;
     }
 
     const getAuthorArticles = async () => {
       setLoading(true);
+      setError(null);
 
       try {
-        const res = await axios.get(`http://localhost:4000/author-api/articles/${user._id}`, { withCredentials: true });
-
-        if(res.data.payload) {
-          setArticles(res.data.payload);
-        }
+        const res = await axios.get(`http://localhost:4000/author-api/articles/${userId}`, { withCredentials: true });
+        setArticles(res.data.payload || []);
       } catch (err) {
-        console.log(err);
-        setError(err.response?.data?.error || "Failed to fetch articles");
+        console.error('Fetch error:', err);
+        setError(err.response?.data?.error || err.response?.data?.message || "Failed to fetch articles");
       } finally {
         setLoading(false);
       }
@@ -129,19 +136,39 @@ function AuthorArticles() {
                   <span className={articleMeta}>By You</span>
                   <span className={timestampClass}>{new Date(article.updatedAt).toLocaleDateString()}</span>
                 </div>
-                <div className="flex gap-3 opacity-0 invisible group-hover/art:opacity-100 group-hover/art:visible transition-all duration-200 absolute bottom-4 right-4 bg-white/90 backdrop-blur-sm rounded-2xl p-2 shadow-2xl border">
+                <div className="flex flex-col gap-2 opacity-0 invisible group-hover/art:opacity-100 group-hover/art:visible transition-all duration-200 absolute bottom-4 right-4 bg-white/90 backdrop-blur-sm rounded-2xl p-3 shadow-2xl border">
                   <button 
                     onClick={() => navigate(`/edit-article/${article._id}`, { state: article })}
-                    className="text-emerald-600 hover:text-emerald-700 font-bold text-xs px-3 py-1.5 rounded-xl bg-emerald-50 hover:bg-emerald-100 transition-all shadow-sm"
+                    className="text-emerald-600 hover:text-emerald-700 font-bold text-xs px-3 py-1.5 rounded-xl bg-emerald-50 hover:bg-emerald-100 transition-all shadow-sm w-full"
                   >
                     ✏️ Edit
                   </button>
                   <button 
                     onClick={() => toggleStatus(article._id, article.isArticleActive)}
-                    className="text-red-600 hover:text-red-700 font-bold text-xs px-3 py-1.5 rounded-xl bg-red-50 hover:bg-red-100 transition-all shadow-sm"
+                    className="text-red-600 hover:text-red-700 font-bold text-xs px-3 py-1.5 rounded-xl bg-red-50 hover:bg-red-100 transition-all shadow-sm w-full"
                   >
                     {article.isArticleActive ? "🗑️ Delete" : "↺ Restore"}
                   </button>
+                  {(article.comments || []).length > 0 && (
+                    <button 
+                      onClick={async () => {
+                        try {
+                          const res = await axios.get(`http://localhost:4000/author-api/articles/${article._id}/comments`, { withCredentials: true });
+                          console.log('Comments:', res.data.payload.comments);
+                          alert(`Comments (${res.data.payload.comments.length}):\n\n` + 
+                            res.data.payload.comments.map(c => 
+                              `${c.user?.firstName || 'User'} (${c.user?.email}): ${c.comment}`
+                            ).join('\n\n')
+                          );
+                        } catch (err) {
+                          alert('Failed to fetch comments: ' + (err.response?.data?.message || err.message));
+                        }
+                      }}
+                      className="text-blue-600 hover:text-blue-700 font-bold text-xs px-3 py-1.5 rounded-xl bg-blue-50 hover:bg-blue-100 transition-all shadow-sm w-full"
+                    >
+                      💬 View Comments ({(article.comments || []).length})
+                    </button>
+                  )}
                 </div>
               </div>
             </div>
