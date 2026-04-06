@@ -117,9 +117,9 @@ function Register() {
   return (
     <div className="relative min-h-[calc(100vh-72px)] flex items-center justify-center p-6">
       {/* Decorative blobs */}
-      <div className="absolute top-1/4 left-1/4 w-72 h-72 bg-purple-300 rounded-full mix-blend-multiply filter blur-2xl opacity-40 animate-blob"></div>
-      <div className="absolute top-1/3 right-1/4 w-72 h-72 bg-pink-300 rounded-full mix-blend-multiply filter blur-2xl opacity-40 animate-blob animation-delay-2000"></div>
-      <div className="absolute -bottom-8 left-1/3 w-72 h-72 bg-indigo-300 rounded-full mix-blend-multiply filter blur-2xl opacity-40 animate-blob animation-delay-4000"></div>
+      <div className="absolute top-1/4 left-1/4 w-72 h-72  rounded-full mix-blend-multiply filter blur-2xl opacity-40 animate-blob"></div>
+      <div className="absolute top-1/3 right-1/4 w-72 h-72  rounded-full mix-blend-multiply filter blur-2xl opacity-40 animate-blob animation-delay-2000"></div>
+      <div className="absolute -bottom-8 left-1/3 w-72 h-72  rounded-full mix-blend-multiply filter blur-2xl opacity-40 animate-blob animation-delay-4000"></div>
 
       <div className="w-full max-w-xl relative z-10 glass-panel p-10 rounded-3xl bg-white/70 backdrop-blur-2xl border border-white/50 shadow-2xl shadow-indigo-500/10">
         <h2 className="text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-pink-500 text-center mb-8">

@@ -47,15 +47,15 @@ function AdminDashboard() {
   return (
     <div className={pageWrapper}>
       {/* Welcome Header */}
-      <div className="flex flex-col lg:flex-row items-center gap-6 mb-12 bg-white/60 backdrop-blur-md p-8 rounded-3xl border border-white/50 shadow-xl shadow-purple-500/10">
-        <div className="w-20 h-20 bg-gradient-to-br from-purple-400 to-indigo-500 rounded-2xl flex items-center justify-center shrink-0">
-          <span className="text-2xl">⚙️</span>
+      <div className="cardClass mb-12 p-8 flex flex-col lg:flex-row items-center gap-6">
+        <div className="w-20 h-20 bg-gradient-to-br from-blue-400 to-indigo-400 rounded-2xl flex items-center justify-center shrink-0 text-white font-bold text-xl shadow-sm">
+          ⚙️
         </div>
-        <div className="text-center lg:text-left">
-          <h1 className="text-4xl lg:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-indigo-500">
-            Admin Control Panel
+        <div>
+          <h1 className="text-3xl lg:text-4xl font-bold text-slate-900 mb-2">
+            Admin Dashboard
           </h1>
-          <p className="text-gray-500 font-medium mt-1">Manage content & users</p>
+          <p className="text-slate-600 font-medium">Manage articles and stats</p>
         </div>
       </div>
 

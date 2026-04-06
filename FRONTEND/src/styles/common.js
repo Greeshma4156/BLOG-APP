@@ -1,48 +1,42 @@
 // src/styles/common.js
-// Theme: Vibrant Glassmorphic Light — Animated gradients, backdrop filters, heavy shadows, modern typography.
+// Theme: Modern Pastel Light — Soft gradients, minimal shadows, calming aesthetic
 
 // ─── Layout ───────────────────────────────────────────
-export const pageBackground = "bg-gradient-to-br from-[#f0f4ff] via-[#faf5ff] to-[#fff0f5] min-h-screen relative overflow-hidden";
-export const pageWrapper = "max-w-6xl mx-auto px-6 py-20 relative z-10";
-export const section = "mb-16";
+export const pageBackground = "bg-gradient-to-br from-slate-50 via-blue-50/50 to-indigo-50 min-h-screen";
+export const pageWrapper = "max-w-6xl mx-auto px-6 py-12 lg:py-20";
+export const section = "mb-16 last:mb-0";
 
 // ─── Cards ────────────────────────────────────────────
-export const cardClass =
-  "bg-white/60 backdrop-blur-xl border border-white/50 rounded-3xl p-8 hover:-translate-y-1 hover:shadow-2xl hover:shadow-indigo-500/20 transition-all duration-300 cursor-pointer";
+export const cardClass = "bg-white/80 border border-slate-200/60 rounded-2xl p-6 lg:p-8 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300";
 
 // ─── Typography ───────────────────────────────────────
-export const pageTitleClass = "text-5xl md:text-7xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 tracking-tight leading-tight mb-4";
-export const headingClass = "text-3xl font-bold text-gray-900 tracking-tight";
-export const subHeadingClass = "text-xl font-semibold text-gray-800 tracking-tight";
-export const bodyText = "text-gray-600 leading-relaxed text-lg";
-export const mutedText = "text-sm text-gray-500";
-export const linkClass = "text-indigo-600 font-semibold hover:text-indigo-800 transition-colors";
+export const pageTitleClass = "text-4xl lg:text-5xl font-bold text-slate-900 leading-tight mb-6";
+export const headingClass = "text-2xl lg:text-3xl font-bold text-slate-900 mb-4";
+export const subHeadingClass = "text-xl font-semibold text-slate-800 mb-3";
+export const bodyText = "text-slate-700 leading-relaxed text-base lg:text-lg";
+export const mutedText = "text-sm text-slate-500";
+export const linkClass = "text-blue-500 hover:text-blue-600 font-medium transition-colors";
 
 // ─── Buttons ──────────────────────────────────────────
-export const primaryBtn =
-  "bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold px-8 py-3 rounded-full hover:from-indigo-700 hover:to-purple-700 shadow-lg shadow-indigo-500/30 hover:shadow-indigo-500/50 hover:-translate-y-0.5 transition-all cursor-pointer text-sm tracking-wide";
-export const secondaryBtn =
-  "bg-white/80 backdrop-blur-md border border-white text-indigo-700 font-bold px-8 py-3 rounded-full hover:bg-white shadow-sm hover:shadow hover:-translate-y-0.5 transition-all cursor-pointer text-sm tracking-wide";
-export const ghostBtn = "text-indigo-600 font-bold hover:text-indigo-800 transition-colors cursor-pointer text-sm px-4 py-2 hover:bg-indigo-50 rounded-full";
+export const primaryBtn = "bg-gradient-to-r from-blue-500 to-indigo-500 text-white font-semibold px-6 py-3 rounded-xl shadow-sm hover:shadow-md hover:-translate-y-0.5 hover:from-blue-600 hover:to-indigo-600 transition-all text-sm";
+export const secondaryBtn = "bg-white border border-slate-200 text-slate-700 font-semibold px-6 py-3 rounded-xl shadow-sm hover:shadow-md hover:bg-slate-50 hover:-translate-y-0.5 transition-all text-sm";
+export const ghostBtn = "text-slate-700 font-medium hover:text-blue-500 hover:bg-blue-50 transition-all px-4 py-2 rounded-lg";
 
 // ─── Forms ────────────────────────────────────────────
-export const formCard = "bg-white/70 backdrop-blur-2xl border border-white/60 rounded-3xl p-10 max-w-lg mx-auto shadow-2xl shadow-purple-500/10";
-export const formTitle = "text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600 text-center mb-8";
-export const labelClass = "text-sm font-bold text-gray-700 mb-2 block";
-export const inputClass =
-  "w-full bg-white/50 backdrop-blur-sm border border-gray-200 rounded-2xl px-5 py-3.5 text-gray-900 text-base placeholder:text-gray-400 focus:outline-none focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/20 transition-all shadow-inner";
-export const formGroup = "mb-5 text-left";
-export const submitBtn =
-  "w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold py-3.5 rounded-2xl hover:from-indigo-700 hover:to-purple-700 shadow-lg shadow-indigo-500/30 hover:shadow-indigo-500/50 transition-all cursor-pointer mt-4 text-base tracking-wide transform hover:-translate-y-0.5";
+export const formCard = "bg-white border border-slate-200 rounded-2xl p-8 lg:p-10 max-w-lg mx-auto shadow-sm hover:shadow-md";
+export const formTitle = "text-2xl lg:text-3xl font-bold text-slate-900 text-center mb-8";
+export const labelClass = "text-sm font-semibold text-slate-700 mb-2.5 block";
+export const inputClass = "w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-slate-900 placeholder-slate-400 focus:outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100 transition-all shadow-sm";
+export const formGroup = "mb-6";
+export const submitBtn = "w-full bg-gradient-to-r from-blue-500 to-indigo-500 text-white font-semibold py-3 rounded-xl hover:shadow-md hover:-translate-y-0.5 transition-all shadow-sm";
 
 // ─── Navbar ───────────────────────────────────────────
-export const navbarClass =
-  "bg-white/70 backdrop-blur-2xl border-b border-white/50 h-[72px] flex items-center sticky top-0 z-50 shadow-sm";
+export const navbarClass = "bg-white/80 border-b border-slate-200/60 backdrop-blur-sm h-16 flex items-center sticky top-0 z-50 shadow-sm";
 export const navContainerClass = "max-w-6xl mx-auto w-full flex items-center justify-between px-6";
-export const navBrandClass = "text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-pink-500 tracking-tight";
-export const navLinksClass = "flex items-center gap-8";
-export const navLinkClass = "text-[0.95rem] font-semibold text-gray-600 hover:text-indigo-600 transition-colors";
-export const navLinkActiveClass = "text-[0.95rem] font-bold text-indigo-600";
+export const navBrandClass = "text-2xl font-bold text-slate-900";
+export const navLinksClass = "flex items-center gap-6 lg:gap-8";
+export const navLinkClass = "text-sm lg:text-base font-medium text-slate-700 hover:text-blue-500 transition-colors px-2 py-1 rounded";
+export const navLinkActiveClass = "text-blue-500 font-semibold";
 
 // ─── Article / Blog ───────────────────────────────────
 export const articleGrid = "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-10";
@@ -67,8 +61,8 @@ export const articleFooter = "border-t border-gray-200/60 mt-16 pt-8 flex items-
 
 // ─── Article Actions ─────────────────────────────
 export const articleActions = "flex gap-4 mt-8 justify-center";
-export const editBtn = "bg-gradient-to-r from-emerald-400 to-teal-500 text-white font-bold px-6 py-2.5 rounded-full shadow-lg shadow-emerald-500/30 hover:scale-105 transition-all text-sm";
-export const deleteBtn = "bg-gradient-to-r from-red-500 to-pink-500 text-white font-bold px-6 py-2.5 rounded-full shadow-lg shadow-red-500/30 hover:scale-105 transition-all text-sm";
+export const editBtn = "text-emerald-600 hover:text-emerald-700 font-semibold px-4 py-2 rounded-lg bg-emerald-50 hover:bg-emerald-100 transition-all shadow-sm text-sm";
+export const deleteBtn = "text-red-600 hover:text-red-700 font-semibold px-4 py-2 rounded-lg bg-red-50 hover:bg-red-100 transition-all shadow-sm text-sm";
 
 // ─── Article Status Badge ─────────────────────────
 export const articleStatusActive =

@@ -126,10 +126,10 @@ function ArticleById() {
   return (
     <div className={articlePageWrapper}>
       {article.imageUrl && (
-        <div className="w-full h-[400px] rounded-3xl overflow-hidden mb-12 shadow-2xl relative">
+        <div className="w-full h-[350px] rounded-2xl overflow-hidden mb-8 shadow-sm">
            <img src={article.imageUrl} alt="Cover" className="w-full h-full object-cover" />
-           <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent flex items-end p-8 pb-10">
-              <span className="bg-white/90 backdrop-blur text-indigo-700 px-4 py-1.5 rounded-full text-sm font-bold shadow-lg">
+           <div className="absolute inset-0 bg-gradient-to-t from-slate-900/40 to-transparent flex items-end p-6">
+              <span className="bg-white/90 text-slate-800 px-3 py-1 rounded-lg text-sm font-semibold shadow">
                 {article.category}
               </span>
            </div>
@@ -137,7 +137,7 @@ function ArticleById() {
       )}
       {!article.imageUrl && (
         <div className="mb-8">
-          <span className="bg-indigo-100 text-indigo-700 px-4 py-1.5 rounded-full text-sm font-bold shadow-sm">
+          <span className="bg-blue-100 text-blue-800 px-3 py-1 rounded-lg text-sm font-semibold shadow-sm">
             {article.category}
           </span>
         </div>
@@ -148,13 +148,13 @@ function ArticleById() {
 
         <div className={articleAuthorRow}>
           <div className={authorInfo}>
-            <div className="w-10 h-10 bg-indigo-100 rounded-full flex items-center justify-center text-indigo-600 font-black">
+            <div className="w-10 h-10 bg-slate-200 rounded-full flex items-center justify-center text-slate-700 font-bold">
               {article.author?.firstName?.charAt(0) || "A"}
             </div>
             By {article.author?.firstName || "Author"}
           </div>
 
-          <div className="text-gray-400 font-medium">{formatDate(article.createdAt)}</div>
+          <div className="text-slate-500 font-medium">{formatDate(article.createdAt)}</div>
         </div>
       </div>
 
