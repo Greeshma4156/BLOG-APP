@@ -26,8 +26,8 @@ function AdminDashboard() {
   const fetchData = async () => {
     try {
       const [articlesRes, statsRes] = await Promise.all([
-        axios.get('http://localhost:4000/admin-api/articles', { withCredentials: true }),
-        axios.get('http://localhost:4000/admin-api/stats', { withCredentials: true })
+        axios.get('https://blog-app-if8r.onrender.com/admin-api/articles', { withCredentials: true }),
+        axios.get('https://blog-app-if8r.onrender.com/admin-api/stats', { withCredentials: true })
       ]);
       setArticles(articlesRes.data.payload || []);
       setStats(statsRes.data.payload || {});

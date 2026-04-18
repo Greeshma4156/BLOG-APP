@@ -10,7 +10,7 @@ function UserDashboard() {
 
   const getArticles = async () => {
     try {
-      let res = await axios.get("http://localhost:4000/user-api/articles", { withCredentials: true });
+      let res = await axios.get("https://blog-app-if8r.onrender.com/user-api/articles", { withCredentials: true });
       if (res.data.payload) setArticles(res.data.payload);
     } catch (err) {
       console.log(err);

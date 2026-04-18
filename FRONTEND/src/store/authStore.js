@@ -12,7 +12,7 @@ export const useAuth = create((set)=>({
             //set loading state
             set({loading:true,error:null})
             //make api call
-            let res = await axios.post("http://localhost:4000/common-api/login",userCredObj,{withCredentials:true})
+            let res = await axios.post("https://blog-app-if8r.onrender.com/common-api/login",userCredObj,{withCredentials:true})
             console.log("res is", res)
             //update state
             set({loading:false,isAuthenticated:true,currentUser:res.data.payload})
@@ -31,7 +31,7 @@ export const useAuth = create((set)=>({
     logout:async()=>{
         try{
             set({loading:true, error:null})
-            let res = await axios.get("http://localhost:4000/common-api/logout",{withCredentials:true})
+            let res = await axios.get("https://blog-app-if8r.onrender.com/common-api/logout",{withCredentials:true})
             set({loading:false,isAuthenticated:false,currentUser:null})
         }catch(err){
             console.log("error is", err)
@@ -48,7 +48,7 @@ export const useAuth = create((set)=>({
   checkAuth: async () => {
     try {
       set({ loading: true });
-      const res = await axios.get("http://localhost:4000/common-api/check-auth", { withCredentials: true });
+      const res = await axios.get("https://blog-app-if8r.onrender.com/common-api/check-auth", { withCredentials: true });
 
       set({
         currentUser: res.data.payload,
