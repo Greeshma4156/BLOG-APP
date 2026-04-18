@@ -1,5 +1,5 @@
 import exp from "express";
-import { connect } from "mongoose";
+import mongoose from "mongoose";
 import { config } from "dotenv";
 import { userRoute } from "./APIs/UserApi.js";
 import cookieParser from "cookie-parser";
@@ -42,17 +42,22 @@ app.get("/", (req, res) => {
 //  Database Connection + Server Start
 async function connectDB() {
   try {
+    if (!process.env.MONGO_URI) {
+      throw new Error("MONGO_URI is missing");
+    }
+
     await mongoose.connect(process.env.MONGO_URI);
-    console.log(" Connected to DB");
+    console.log("✅ Connected to DB");
 
     const PORT = process.env.PORT || 5000;
 
     app.listen(PORT, () => {
-      console.log(` Server running on port ${PORT}`);
+      console.log(`🚀 Server running on port ${PORT}`);
     });
 
   } catch (err) {
-    console.log(" DB connection error:", err);
+    console.error("❌ DB connection error:", err.message);
+    process.exit(1);
   }
 }
 
