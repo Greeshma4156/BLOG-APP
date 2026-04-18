@@ -18,7 +18,8 @@ app.use(
   cors({
     origin: [
       "http://localhost:5173",              // local frontend
-      "https://blog-app-wr2a.vercel.app"    // deployed frontend
+      "https://blog-app-wr2a.vercel.app",   // deployed frontend
+      "https://blog-app-ruby-nine-73.vercel.app" // new deployed frontend
     ],
     credentials: true
   })
