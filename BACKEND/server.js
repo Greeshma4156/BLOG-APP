@@ -12,41 +12,59 @@ config(); //process.env
 
 //Create express application
 const app = exp();
-//use cors middleware
-app.use(cors({ origin: "http://localhost:5173" , credentials:true})); //credentials allow browser to recieve the token
-//add body parser middleware
+
+//  CORS Configuration (IMPORTANT)
+app.use(
+  cors({
+    origin: [
+      "http://localhost:5173",              // local frontend
+      "https://blog-app-wr2a.vercel.app"    // deployed frontend
+    ],
+    credentials: true
+  })
+);
+
+//  Middleware
 app.use(exp.json());
-//add cookie parser middleware
 app.use(cookieParser());
 
-//connect APIs
+//  Routes
 app.use("/user-api", userRoute);
 app.use("/author-api", authorRoute);
 app.use("/admin-api", adminRoute);
 app.use("/common-api", commonRouter);
 
-//connect to db
-const connectDB = async () => {
-  try {
-    await connect(process.env.DB_URL);
-    console.log("DB connection success");
+//  Default Route (for testing)
+app.get("/", (req, res) => {
+  res.send("Blog Backend Running Successfully ");
+});
 
-    //start http server
-    app.listen(process.env.PORT, () => console.log(`server started on port ${process.env.PORT}`));
+//  Database Connection + Server Start
+async function connectDB() {
+  try {
+    await mongoose.connect(process.env.MONGO_URI);
+    console.log(" Connected to DB");
+
+    const PORT = process.env.PORT || 5000;
+
+    app.listen(PORT, () => {
+      console.log(` Server running on port ${PORT}`);
+    });
+
   } catch (err) {
-    console.log("Err in DB connection", err);
+    console.log(" DB connection error:", err);
   }
-};
+}
 
 connectDB();
 
+// Global Error Handler
 app.use((err, req, res, next) => {
-
   console.log("Error name:", err.name);
   console.log("Error code:", err.code);
   console.log("Full error:", err);
 
-  // mongoose validation error
+  // Mongoose validation error
   if (err.name === "ValidationError") {
     return res.status(400).json({
       message: "error occurred",
@@ -54,7 +72,7 @@ app.use((err, req, res, next) => {
     });
   }
 
-  // mongoose cast error
+  // Mongoose cast error
   if (err.name === "CastError") {
     return res.status(400).json({
       message: "error occurred",
@@ -62,6 +80,7 @@ app.use((err, req, res, next) => {
     });
   }
 
+  // Duplicate key error
   const errCode = err.code ?? err.cause?.code ?? err.errorResponse?.code;
   const keyValue = err.keyValue ?? err.cause?.keyValue ?? err.errorResponse?.keyValue;
 
@@ -74,7 +93,7 @@ app.use((err, req, res, next) => {
     });
   }
 
-  // ✅ HANDLE CUSTOM ERRORS
+  // Custom errors
   if (err.status) {
     return res.status(err.status).json({
       message: "error occurred",
@@ -82,7 +101,7 @@ app.use((err, req, res, next) => {
     });
   }
 
-  // default server error
+  // Default error
   res.status(500).json({
     message: "error occurred",
     error: "Server side error",
