@@ -111,6 +111,6 @@ app.use((err, req, res, next) => {
   // Default error
   res.status(500).json({
     message: "error occurred",
-    error: "Server side error",
+    error: err.message || "Server side error",
   });
 });
