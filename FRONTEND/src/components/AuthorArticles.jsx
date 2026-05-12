@@ -15,7 +15,7 @@ function AuthorArticles() {
     if (!window.confirm(`Are you sure? ${currentStatus ? 'This will soft-delete the article (can be restored).' : 'This will restore the article.'}`)) return;
 
     try {
-      await axios.patch(`https://blog-app-if8r.onrender.com/author-api/articles/${articleId}/status`, { 
+      await axios.patch(`/author-api/articles/${articleId}/status`, { 
         isArticleActive: !currentStatus 
       }, { withCredentials: true });
       
@@ -43,7 +43,7 @@ function AuthorArticles() {
       setError(null);
 
       try {
-        const res = await axios.get(`https://blog-app-if8r.onrender.com/author-api/articles/${userId}`, { withCredentials: true });
+        const res = await axios.get(`/author-api/articles/${userId}`, { withCredentials: true });
         setArticles(res.data.payload || []);
       } catch (err) {
         setError(err.response?.data?.error || err.response?.data?.message || "Failed to fetch articles");
@@ -142,7 +142,7 @@ function AuthorArticles() {
                   <button 
                     onClick={async () => {
                       try {
-                        const res = await axios.get(`https://blog-app-if8r.onrender.com/author-api/articles/${article._id}/comments`, { withCredentials: true });
+                        const res = await axios.get(`/author-api/articles/${article._id}/comments`, { withCredentials: true });
                         alert(`Comments (${res.data.payload.comments.length}):\n\n` + 
                           res.data.payload.comments.map(c => 
                             `${c.user?.firstName || 'User'} (${c.user?.email}): ${c.comment}`

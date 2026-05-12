@@ -4,6 +4,22 @@
   "framework": "vite",
   "rewrites": [
     {
+      "source": "/user-api/:match*",
+      "destination": "https://blog-app-if8r.onrender.com/user-api/:match*"
+    },
+    {
+      "source": "/author-api/:match*",
+      "destination": "https://blog-app-if8r.onrender.com/author-api/:match*"
+    },
+    {
+      "source": "/admin-api/:match*",
+      "destination": "https://blog-app-if8r.onrender.com/admin-api/:match*"
+    },
+    {
+      "source": "/common-api/:match*",
+      "destination": "https://blog-app-if8r.onrender.com/common-api/:match*"
+    },
+    {
       "source": "/(.*)",
       "destination": "/index.html"
     }

@@ -28,7 +28,7 @@ function AddArticle() {
 
     try {
       toast.loading("Publishing...");
-      await axios.post("https://blog-app-if8r.onrender.com/author-api/articles", {
+      await axios.post("/author-api/articles", {
         ...data,
         author: user.userId,
       }, { withCredentials: true });
@@ -99,3 +99,4 @@ function AddArticle() {
 }
 
 export default AddArticle;
+

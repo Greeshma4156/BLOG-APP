@@ -65,7 +65,7 @@ function Register() {
       if(role === "user"){
 
         let resObj = await axios.post(
-          "https://blog-app-if8r.onrender.com/user-api/users",
+          "/user-api/users",
           formData,
           { 
             headers: { 
@@ -83,7 +83,7 @@ function Register() {
       if(role === "author"){
 
         let resObj = await axios.post(
-          "https://blog-app-if8r.onrender.com/author-api/users",
+          "/author-api/users",
           formData,
           { 
             headers: { 

@@ -41,7 +41,7 @@ function ArticleById() {
       setLoading(true);
 
       try {
-        const res = await axios.get(`https://blog-app-if8r.onrender.com/user-api/articles/${id}`, { withCredentials: true });
+        const res = await axios.get(`/user-api/articles/${id}`, { withCredentials: true });
 
         setArticle(res.data.payload);
       } catch (err) {
@@ -70,7 +70,7 @@ function ArticleById() {
 
     try {
       const res = await axios.patch(
-        `https://blog-app-if8r.onrender.com/author-api/articles/${id}/status`,
+        `/author-api/articles/${id}/status`,
         { isArticleActive: newStatus },
         { withCredentials: true },
       );
@@ -99,7 +99,7 @@ function ArticleById() {
         comment: data.comment
       }
       
-      const res = await axios.post(`https://blog-app-if8r.onrender.com/user-api/articles/${id}/comments`, payload, { withCredentials: true });
+      const res = await axios.post(`/user-api/articles/${id}/comments`, payload, { withCredentials: true });
       
       // Update article locally
       setArticle({
